@@ -3,20 +3,23 @@ import React from "react"
  
 
 
-const 	handleSubmit=(e)=>
+const 	handleSubmit=(event)=>
 {
-	e.preventDefault();
+	event.preventDefault();
+	const x = document.getElementById("State");
 
-	var First=e.target.FirstName.value;
-	const Last=e.target.LastName.value;
-	const addy=e.target.Address1.value;
-    const addy2=e.target.Address2.value;
-    const city=e.target.City.value;
-    const zip=e.target.ZipCode.value;
-	var x = document.getElementById("ST");
-	var ST = x.value;
-    console.log(First +"/n"+ Last, addy+ "/n", addy2 + "/n" + city+ "/n" + zip +"/n" + ST);
+	const newUser={
+	 First:event.target.FirstName.value,
+	 Last:event.target.LastName.value,
+	 addy:event.target.Address1.value,
+     addy2:event.target.Address2.value,
+     city:event.target.City.value,
+     zip:event.target.ZipCode.value,
+	 ST:x.value
+	}
 
+	console.log(newUser)
+	return(newUser)
 }
 
 
@@ -28,29 +31,29 @@ export default function Pmanagment() {
         <h2 className="header">
           Profile Managment
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form method="POST" onSubmit={handleSubmit}>
          <div className="formList">
         <label className="form">
-        <input type="text" name="FirstName" placeholder="First Name" maxLength={100}/>
+        <input type="text" name="FirstName" placeholder="First Name" maxLength={100} required/>
           </label>
 
           <label className="form">
-          <input  type="text" name="LastName" placeholder="Last Name" maxLength={50}/>
+          <input  type="text" name="LastName" placeholder="Last Name" maxLength={50} required/>
           </label>
           <label className="form">
-          <input type="text" name="Address1" placeholder="Address 1" maxLength={100}/>
+          <input type="text" name="Address1" placeholder="Address 1" maxLength={100} required/>
           </label>
           <label className="form">
           <input type="text" name="Address2" placeholder="Address 2(Optional)"/>
           </label>
           <label className="form" >
-          <input type="text" name="City" placeholder="City" maxLength={100}/>
+          <input type="text" name="City" placeholder="City" maxLength={100} required/>
         
           </label>
 		
           <label className="form" >
             State
-          <select id="ST" >, 
+          <select id="State" required >, 
             	<option value="AL">AL</option>
             	<option value="AK">AK</option>
 	            <option value="AR">AR</option>	
@@ -108,7 +111,7 @@ export default function Pmanagment() {
 
 
           <label className="form">
-          <input type="text" name="ZipCode" placeholder="ZipCode" min={7} />
+          <input type="number" name="ZipCode" placeholder="ZipCode" minLength={5} maxLength={9} required/>
           </label>
           <input className="submit_button" type="submit"  />
         </div>
