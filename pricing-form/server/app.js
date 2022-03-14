@@ -17,6 +17,13 @@ const history = [
     }
 ];
 
+const users = [
+    {
+        'id': 0,
+        'address': '1234 Calhoun Way'
+    }
+]
+
 function validateQuote(quote) {
     const schema = Joi.object({
         quote_date: Joi.date().max('now').required(),
@@ -40,6 +47,12 @@ app.post('/api/history', (req, res) => {
     if (error) return res.status(400).send({ "error": error.details[0].message });
     history.unshift(req.body);
     res.send(req.body);
+});
+
+app.get('/api/address/:id', (req, res) => {
+    let user = users.find(x => x.id == req.params.id);
+    if (user != undefined) return res.send(JSON.stringify(user.address));
+    return res.status(400).send({ "error": error.details[0].message });
 });
 
 const port = process.env.port || 3001;

@@ -25,7 +25,7 @@ class FuelQuoteForm extends React.Component {
             gallons: 5,
             delivery_date: ds,
             total: 0.00,
-
+            user: 0,
             // Set by the pricing module
             ppg: 34.34,
 
@@ -55,8 +55,24 @@ class FuelQuoteForm extends React.Component {
             .catch((e) => console.log(e.message));
     }
 
+    getUserAddress() {
+        const fetchData = async () => {
+            const res = await fetch(`http://localhost:3001/api/address/${this.state.user}`);
+            if (!res.ok) {
+                throw new Error('User address could not be fetched');
+            } else {
+                return res.json();
+            }
+        }
+        fetchData().then((res) => {
+            //this.setState({ delivery_address: res.body });
+            console.log(res);
+        }).catch((e) => console.log(e.message));
+    }
+
     componentDidMount() {
         this.updateTable();
+        this.getUserAddress();
     }
 
     handleInputChange(event) {
