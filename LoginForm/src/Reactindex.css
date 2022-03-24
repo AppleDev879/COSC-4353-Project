@@ -8,7 +8,7 @@
 
 body {
   font-family: 'Raleway', sans-serif;
-  background-image: url('/Users/carlosmolina/Desktop/Computer Science/COSC 4353 Software Design/login-form/src/oil barrel mint.jpg');
+  background-image: url('./oil\ barrel\ mint.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -21,7 +21,7 @@ body {
 
 .ExitIcon {
 position: absolute;
-background-image: url('/Users/carlosmolina/Desktop/Computer Science/COSC 4353 Software Design/login-form/src/exit_icon.png');
+background-image: url('./exit_icon.png');
 background-size: cover;
 background-position: center;
 top: 2.5%;
