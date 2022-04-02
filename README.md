@@ -6,6 +6,6 @@ For the Login-form I used styled components, react icons, and keyframes (styled-
 
 In this iteration error popups were included for the validation and auth process. User profile info from oauth (Google, Github, etc.) shows up on the homepage nav. Now, users are persistent due to DB implementation and now only new users are allowed to sign up and the DB is checked for correct user info upon login.
 
-**Side Note: I included my .env file as env.txt. Just make sure to change the filename back to .env so my app can run with all the ENV variables I set for the backend.**
+**Side Note: I included my .env file as env.txt in the Server folder. Just make sure to change the filename back to .env so my app can run with all the ENV variables I set for the backend.**
 
 --Carlos Molina--
