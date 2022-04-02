@@ -25,7 +25,7 @@ class FuelQuoteForm extends React.Component {
             gallons: 5,
             delivery_date: ds,
             total: 0.00,
-            user: 0,
+            user: 1,
             // Set by the pricing module
             ppg: 34.34,
 
@@ -65,12 +65,13 @@ class FuelQuoteForm extends React.Component {
             }
         }
         fetchData().then((res) => {
-            //this.setState({ delivery_address: res.body });
+            this.setState({ delivery_address: res });
             console.log(res);
         }).catch((e) => console.log(e.message));
     }
 
     componentDidMount() {
+        document.title = "Price Quote Form";
         this.updateTable();
         this.getUserAddress();
     }
@@ -238,12 +239,12 @@ class FuelQuoteForm extends React.Component {
                             {this.state.rows.map((item, key) => {
                                 return (
                                     <tr id="addr0" key={key} >
-                                        <td><center>{item.quote_date}</center></td>
+                                        <td><center>{item.quote_date.replace(/T.*/g, '')}</center></td>
                                         <td><center>{item.gallons}</center></td>
-                                        <td><center>{item.delivery_date}</center></td>
+                                        <td><center>{item.delivery_date.replace(/T.*/g, '')}</center></td>
                                         <td><center>{item.delivery_address}</center></td>
-                                        <td><center>{item.ppg}</center></td>
-                                        <td><center>{item.total}</center></td>
+                                        <td><center>{this.currencyFormat(item.ppg)}</center></td>
+                                        <td><center>{this.currencyFormat(item.total)}</center></td>
                                     </tr>
                                 )
                             })}
