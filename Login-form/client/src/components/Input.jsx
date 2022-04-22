@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function Input({type,placeholder}){
-    return <StyledInput type={type} placeholder={placeholder} />;
+export default function Input({type,placeholder,value, onChange,id, autocomplete}){
+    return <StyledInput type={type} placeholder={placeholder} value={value} onChange={onChange} id={id} autocomplete={autocomplete} />;
 }
 
 const StyledInput = styled.input`
