@@ -112,8 +112,8 @@ class FuelQuoteForm extends React.Component {
         event.preventDefault();
         if (this.validateForm()) {
             const query = async () => {
-                const res = await fetch(`http://localhost:3001/api/getquote/${this.setState.userId}/${this.state.gallons}`, {
-                    method: 'POST',
+                const res = await fetch(`http://localhost:3001/api/getquote/${this.state.userId}/${this.state.gallons}`, {
+                    method: 'GET',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
                         'Content-Type': 'application/json'
@@ -167,7 +167,8 @@ class FuelQuoteForm extends React.Component {
                     alert(res.error);
                 } else {
                     this.setState({
-                        ppg: res.suggested
+                        ppg: res.suggested,
+                        total: res.total
                     }, () => {
                         this.updateTable();
                         console.log(res);
@@ -208,11 +209,31 @@ class FuelQuoteForm extends React.Component {
         return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
+    commaFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+
+    tableDateString(sqldate) {
+        const tableDate = new Date(sqldate);
+        const today = new Date();
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        var output = tableDate.toDateString();
+        if (tableDate.toDateString() === yesterday.toDateString()) {
+            output = "yesterday";
+        } else if (tableDate.toDateString() === today.toDateString()) {
+            output = "today";
+        }
+        return output;
+    }
+
     render() {
         return (
             <div className="container" >
                 <div className="quoteForm">
-                    <h3>Pricing Form</h3>
+                    <h2>Pricing Form</h2>
                     <form onSubmit={this.handleSubmit}>
                         <label>Gallons:
                             <input type="number"
@@ -229,6 +250,7 @@ class FuelQuoteForm extends React.Component {
                                 className="deliveryAddress"
                                 value={this.state.delivery_address}
                                 readOnly={true}
+                                disabled={true}
                             />
                         </label>
                         <br />
@@ -244,15 +266,18 @@ class FuelQuoteForm extends React.Component {
                         <label>Price per gallon
                             <input
                                 className="pricePerGallon"
-                                value={this.state.ppg === 0.0 ? "" : this.state.ppg}
+                                value={this.state.ppg === 0.0 ? "Get quote" : this.state.ppg}
                                 readOnly={true}
+                                disabled={true}
                             />
                         </label>
                         <br />
+                        <input type="button" value="Get Quote" onClick={this.handleGetQuote} />
                         <input type="submit" />
                     </form>
                     <h4 className="totalPrice">{this.currencyFormat(this.state.total)}</h4>
                 </div>
+                <h3>History for User ID {this.state.userId}</h3>
                 <div className="table-container">
                     <table className="quote-table">
                         <thead>
@@ -268,9 +293,9 @@ class FuelQuoteForm extends React.Component {
                             {this.state.rows.map((item, key) => {
                                 return (
                                     <tr id="addr0" key={key} >
-                                        <td><center>{item.quote_date.replace(/T.*/g, '')}</center></td>
-                                        <td><center>{item.gallons}</center></td>
-                                        <td><center>{item.delivery_date.replace(/T.*/g, '')}</center></td>
+                                        <td><center>{this.tableDateString(item.quote_date)}</center></td>
+                                        <td><center>{this.commaFormat(item.gallons)}</center></td>
+                                        <td><center>{this.tableDateString(item.delivery_date)}</center></td>
                                         <td><center>{item.delivery_address}</center></td>
                                         <td><center>{this.currencyFormat(item.ppg)}</center></td>
                                         <td><center>{this.currencyFormat(item.total)}</center></td>
