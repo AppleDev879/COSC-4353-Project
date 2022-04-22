@@ -159,7 +159,8 @@ getSuggestedPrice = async (userId, gallons) => {
     total = Math.round((total + Number.EPSILON) * 100) / 100
     const output = {
         'suggested': suggestedPrice,
-        'total': total
+        'total': total,
+        'returning': RHF === 0.01 ? true : false
     };
     return output;
 }

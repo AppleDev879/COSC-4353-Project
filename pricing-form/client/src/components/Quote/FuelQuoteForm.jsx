@@ -27,19 +27,20 @@ class FuelQuoteForm extends React.Component {
         const ds = this.dateString(date);
         this.state = {
             gallons: 500,
-            delivery_date: ds,
+            deliveryDate: ds,
             total: 0.00,
             userId: Cookies.get('userId'),
             ppg: 0.00,
             //Set by the client profile
             delivery_address: "2123 Glover Way",
+            returningCustomer: false,
             rows: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    updateTable() {
+    updateTable(callback) {
         const fetchData = async () => {
             const res = await fetch(`http://localhost:3001/api/history/${this.state.userId}`);
             if (!res.ok) {
@@ -51,8 +52,11 @@ class FuelQuoteForm extends React.Component {
         fetchData().then((res) => {
             this.setState({
                 rows: res
+            }, () => {
+                if (callback) {
+                    callback();
+                }
             });
-            console.log(res);
         })
             .catch((e) => console.log(e.message));
     }
@@ -99,7 +103,7 @@ class FuelQuoteForm extends React.Component {
 
         var now = new Date();
         now.setDate(now.getDate() - 1);
-        var comps = this.state.delivery_date.split("-");
+        var comps = this.state.deliveryDate.split("-");
         var deliveryDate = new Date(comps[0], comps[1] - 1, comps[2]);
         if (deliveryDate < now) {
             alert("Please select a date in the future.");
@@ -128,7 +132,8 @@ class FuelQuoteForm extends React.Component {
                     // update the total here
                     this.setState({
                         ppg: res.suggested,
-                        total: res.total
+                        total: res.total,
+                        returningCustomer: res.returning
                     }, () => {
                         console.log(res);
                     });
@@ -144,7 +149,7 @@ class FuelQuoteForm extends React.Component {
 
             const item = {
                 quote_date: this.dateString(new Date()),
-                delivery_date: this.state.delivery_date,
+                delivery_date: this.state.deliveryDate,
                 delivery_address: this.state.delivery_address,
                 gallons: this.state.gallons,
                 userId: this.state.userId
@@ -168,11 +173,14 @@ class FuelQuoteForm extends React.Component {
                 } else {
                     this.setState({
                         ppg: res.suggested,
-                        total: res.total
+                        total: res.total,
+                        returningCustomer: res.returning
                     }, () => {
-                        this.updateTable();
-                        console.log(res);
-                    })
+                        this.updateTable(() => {
+                            console.log(res);
+                            alert(`Thank you for your order. You will receive it by ${this.state.deliveryDate}.`);
+                        });
+                    });
                 }
             });
         }
@@ -258,7 +266,7 @@ class FuelQuoteForm extends React.Component {
                             <input type="date"
                                 className="deliveryDate"
                                 name="delivery_date"
-                                value={this.state.delivery_date}
+                                value={this.state.deliveryDate}
                                 onChange={(e) => this.handleInputChange(e)}
                             />
                         </label>
@@ -271,11 +279,12 @@ class FuelQuoteForm extends React.Component {
                                 disabled={true}
                             />
                         </label>
+                        <p hidden={!this.state.returningCustomer}>Thank you for being a repeat customer. You have received a small discount on today's order.</p>
                         <br />
                         <input type="button" value="Get Quote" onClick={this.handleGetQuote} />
                         <input type="submit" />
                     </form>
-                    <h4 className="totalPrice">{this.currencyFormat(this.state.total)}</h4>
+                    <h4 className="totalPrice">Total: {this.currencyFormat(this.state.total)}</h4>
                 </div>
                 <h3>History for User ID {this.state.userId}</h3>
                 <div className="table-container">
