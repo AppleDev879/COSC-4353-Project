@@ -1,34 +1,36 @@
 import React from 'react'
+import Cookies from 'js-cookie';
+
 import "./Fuelquoteform.css"
-
-function dateString(date) {
-    var mm = date.getMonth() + 1; // getMonth() is zero-based
-    var dd = date.getDate();
-
-    return [date.getFullYear(),
-    (mm > 9 ? '' : '0') + mm,
-    (dd > 9 ? '' : '0') + dd
-    ].join('-');
-}
 
 class FuelQuoteForm extends React.Component {
 
+    dateString = (date) => {
+        var mm = date.getMonth() + 1; // getMonth() is zero-based
+        var dd = date.getDate();
+
+        return [date.getFullYear(),
+        (mm > 9 ? '' : '0') + mm,
+        (dd > 9 ? '' : '0') + dd
+        ].join('-');
+    }
+
     constructor(props) {
         super(props);
+        // TODO: just for testing, delete later
+        Cookies.set('userId', 1)
 
         // Get today's date
         var date = new Date();
         // Set date to 3 days into the future
         date.setDate(date.getDate() + 3);
-        const ds = dateString(date);
+        const ds = this.dateString(date);
         this.state = {
-            gallons: 5,
+            gallons: 500,
             delivery_date: ds,
             total: 0.00,
-            user: 1,
-            // Set by the pricing module
-            ppg: 34.34,
-
+            userId: Cookies.get('userId'),
+            ppg: 0.00,
             //Set by the client profile
             delivery_address: "2123 Glover Way",
             rows: []
@@ -39,7 +41,7 @@ class FuelQuoteForm extends React.Component {
 
     updateTable() {
         const fetchData = async () => {
-            const res = await fetch('http://localhost:3001/api/history');
+            const res = await fetch(`http://localhost:3001/api/history/${this.state.userId}`);
             if (!res.ok) {
                 throw new Error('Data could not be fetched');
             } else {
@@ -57,7 +59,7 @@ class FuelQuoteForm extends React.Component {
 
     getUserAddress() {
         const fetchData = async () => {
-            const res = await fetch(`http://localhost:3001/api/address/${this.state.user}`);
+            const res = await fetch(`http://localhost:3001/api/address/${this.state.userId}`);
             if (!res.ok) {
                 throw new Error('User address could not be fetched');
             } else {
@@ -86,45 +88,12 @@ class FuelQuoteForm extends React.Component {
         });
     }
 
-    handleAddRow = () => {
-        const item = {
-            quote_date: dateString(new Date()),
-            delivery_date: this.state.delivery_date,
-            delivery_address: this.state.delivery_address,
-            gallons: this.state.gallons,
-            total: this.state.total,
-            ppg: this.state.ppg
-        };
-        // Post row to backend
-        const postData = async () => {
-
-            var formData = JSON.stringify(item);
-            const res = await fetch('http://localhost:3001/api/history', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-                body: formData
-            });
-            return res.json();
-        }
-        postData().then((res) => {
-            if (res.error) {
-                alert(res.error);
-            } else {
-                this.updateTable();
-                console.log(res);
-            }
-        })
-    };
-
-    handleSubmit = (event) => {
-        event.preventDefault()
+    validateForm = () => {
         var valid = true;
         var gallons = this.state.gallons;
-        if (isNaN(gallons) || gallons < 0 || gallons > 5000) {
-            alert("Please enter a value for gallons between 0 and 5000");
+        const maxGallons = 500000
+        if (isNaN(gallons) || gallons < 0 || gallons > 500000) {
+            alert("Please enter a value for gallons between 0 and 500,000");
             valid = false;
         }
 
@@ -136,15 +105,75 @@ class FuelQuoteForm extends React.Component {
             alert("Please select a date in the future.");
             valid = false;
         }
+        return valid;
+    }
 
-        if (valid) {
-            this.setState({
-                // Submit the new entry to the backend
-
-                total: Math.round(this.state.ppg * this.state.gallons * 100) / 100
-            }, function () {
-                this.handleAddRow();
+    handleGetQuote = (event) => {
+        event.preventDefault();
+        if (this.validateForm()) {
+            const query = async () => {
+                const res = await fetch(`http://localhost:3001/api/getquote/${this.setState.userId}/${this.state.gallons}`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    }
+                });
+                return res.json();
+            }
+            query().then((res) => {
+                if (res.error) {
+                    alert(res.error);
+                } else {
+                    // update the total here
+                    this.setState({
+                        ppg: res.suggested,
+                        total: res.total
+                    }, () => {
+                        console.log(res);
+                    });
+                }
             })
+        }
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault()
+
+        if (this.validateForm()) {
+
+            const item = {
+                quote_date: this.dateString(new Date()),
+                delivery_date: this.state.delivery_date,
+                delivery_address: this.state.delivery_address,
+                gallons: this.state.gallons,
+                userId: this.state.userId
+            };
+            // Post row to backend
+            const submit = async () => {
+                var formData = JSON.stringify(item);
+                const res = await fetch('http://localhost:3001/api/history', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: formData
+                });
+                return res.json();
+            }
+            submit().then((res) => {
+                if (res.error) {
+                    alert(res.error);
+                } else {
+                    this.setState({
+                        ppg: res.suggested
+                    }, () => {
+                        this.updateTable();
+                        console.log(res);
+                    })
+                }
+            });
         }
     }
 
@@ -215,7 +244,7 @@ class FuelQuoteForm extends React.Component {
                         <label>Price per gallon
                             <input
                                 className="pricePerGallon"
-                                value={this.state.ppg}
+                                value={this.state.ppg === 0.0 ? "" : this.state.ppg}
                                 readOnly={true}
                             />
                         </label>
