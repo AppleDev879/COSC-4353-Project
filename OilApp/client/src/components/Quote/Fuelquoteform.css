@@ -1,0 +1,112 @@
+.container {
+   padding: 3rem;
+   background: rgba(26, 15, 35, 0.55);
+   backdrop-filter: blur(16px) saturate(180%);
+   -webkit-backdrop-filter: blur(16px) saturate(180%);
+   border-radius: 12px;
+   border: 1px solid rgb(235, 232, 238, 0.33);
+   box-shadow: 8px 8px 12px 0 rgba(48,25,52, 0.5);;
+   color: #fbfcff;
+}
+
+.labels {
+    font-size: 1rem;
+}
+
+.pricing {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.deliveryAddress,
+.numberOfGallons,
+.deliveryDate,
+.pricePerGallon {
+background: rgb(119, 172, 207, 0.67);
+border-radius: 2rem;
+width: 100%;
+max-height: 3.125rem;
+padding: 1rem;
+margin: 0.5rem 0 1.5rem 0;
+border: none;
+outline: none;
+color: #EBE8EE;
+font-size: 1rem;
+font-weight: bold;
+}
+
+.deliveryDate::-webkit-calendar-picker-indicator {
+    filter: invert(100%);
+}
+
+input:focus {
+    display: inline-block;
+    box-shadow: 0 0 0 0.2rem #EBE8EE;
+    backdrop-filter: blur(12rem);
+    border-radius: 2rem;
+}
+
+input[type=submit],
+input[type=button] {
+    background: linear-gradient(135deg, hsla(235, 100%, 78%, 1) 0%, hsla(293, 84%, 12%, 1) 100%);
+box-shadow: 8px 8px 12px 0 rgba(48,25,52, 0.5);
+text-transform: uppercase;
+letter-spacing: 0.2rem;
+padding: 0.8rem 1.25rem;
+border: none;
+color: #fbfcff;
+border-radius: 2rem;
+font-weight: 500;
+cursor: pointer;
+transition-duration: 0.35s;
+transition-timing-function: ease;
+}
+
+input[type=submit]:hover,
+input[type=button]:hover {
+    transform: scale(1.05);
+}
+
+.center {
+    display: flex;
+    justify-content: space-around;
+}
+
+.totalPrice {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+}
+
+.quote-table {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+}
+
+td {
+    padding: 0.4rem;
+}
+
+h3,
+h2,
+h1 {
+    text-align: center;
+}
+
+h3{
+    font-size: 1.2rem;
+}
+
+.table-container {
+    padding-bottom: 50px;
+}
+
+.quote-table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid;
+}
