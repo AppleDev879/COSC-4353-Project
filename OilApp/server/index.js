@@ -201,16 +201,15 @@ app.get('/api/getquote/:id/:gallons', async (req, res) => {
 });
 app.post("/api/profile",(req,res)=>
 {
-    const lastName=req.body.Last;
-    const firstName=req.body.First;
+    const Name=req.body.Name;
     const address1=req.body.addy;
     const address2=req.body.addy2;
     const city=req.body.city;
     const zip =req.body.zip;
     const st=req.body.ST;
-    const sqlInsert="UPDATE user (firstName, lastName, address1, address2, city,zip, st) VALUES(?,?,?,?,?,?,?)"
+    const sqlInsert="UPDATE users (name, address1, address2, city,zip, st) VALUES(?,?,?,?,?,?,?)"
     +"WHERE ID ="+ localStorage.getItem('token');
-    db.query(sqlInsert,[ firstName, lastName, address1, address2, city,zip, st],(err,res)=>{
+    db.query(sqlInsert,[ Name, address1, address2, city,zip, st],(err,res)=>{
         console.log(err);
     } );
 });

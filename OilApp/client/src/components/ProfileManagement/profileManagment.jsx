@@ -9,8 +9,7 @@ const 	handleSubmit=(event)=>
 	const x = document.getElementById("ST");
 
 	const newUser={
-	 First:event.target.FirstName.value,
-	 Last:event.target.LastName.value,
+	 Name:event.target.Name.value,
 	 addy:event.target.Address1.value,
      addy2:event.target.Address2.value,
      city:event.target.City.value,
@@ -19,10 +18,9 @@ const 	handleSubmit=(event)=>
 	}
 
 	console.log(newUser)
-	axios.post("http://localhost:3001/api/profile",
+	axios.post("http://localhost:8080/api/profile",
 	{
-		First:event.target.FirstName.value,
-		Last:event.target.LastName.value,
+		Name:event.target.Name.value,
 		addy:event.target.Address1.value,
 		addy2:event.target.Address2.value,
 		city:event.target.City.value,
@@ -42,12 +40,9 @@ export default function Pmanagment() {
         <form onSubmit={handleSubmit}>
          <div className="formList">
         <label className="form">
-        <input type="text" name="FirstName" placeholder="First Name" maxLength={100} className="inputs" required/>
+        <input type="text" name="Name" placeholder="Name" maxLength={100} className="inputs" required/>
           </label>
 
-          <label className="form">
-          <input  type="text" name="LastName" placeholder="Last Name" maxLength={50} className="inputs" required/>
-          </label>
           <label className="form">
           <input type="text" name="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
           </label>
