@@ -19,7 +19,7 @@ const 	handleSubmit=(event)=>
 	}
 
 	console.log(newUser)
-	axios.post("http://localhost:3001/api/insert",
+	axios.post("http://localhost:3001/api/profile",
 	{
 		First:event.target.FirstName.value,
 		Last:event.target.LastName.value,
@@ -42,26 +42,26 @@ export default function Pmanagment() {
         <form onSubmit={handleSubmit}>
          <div className="formList">
         <label className="form">
-        <input type="text" name="FirstName" placeholder="First Name" maxLength={100} className="inputs"/>
+        <input type="text" name="FirstName" placeholder="First Name" maxLength={100} className="inputs" required/>
           </label>
 
           <label className="form">
-          <input  type="text" name="LastName" placeholder="Last Name" maxLength={50} className="inputs"/>
+          <input  type="text" name="LastName" placeholder="Last Name" maxLength={50} className="inputs" required/>
           </label>
           <label className="form">
-          <input type="text" name="Address1" placeholder="Address 1" maxLength={100} className="inputs"/>
+          <input type="text" name="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
           </label>
           <label className="form">
-          <input type="text" name="Address2" placeholder="Address 2(Optional)" className="inputs"/>
+          <input type="text" name="Address2" placeholder="Address 2(Optional)" className="inputs" />
           </label>
           <label className="form" >
-          <input type="text" name="City" placeholder="City" maxLength={100} className="inputs"/>
+          <input type="text" name="City" placeholder="City" maxLength={100} className="inputs" required/>
         
           </label>
 		
           <label className="form" >
             State
-          <select id="ST" className="inputs select-category" >, 
+          <select id="ST" className="inputs select-category" required>, 
             	<option value="AL">AL</option>
             	<option value="AK">AK</option>
 	            <option value="AR">AR</option>	
@@ -119,7 +119,7 @@ export default function Pmanagment() {
 
 
           <label className="form">
-          <input type="text" name="ZipCode" placeholder="ZipCode" min={7} className="inputs"/>
+          <input type="text" name="ZipCode" placeholder="ZipCode" min={7} className="inputs" required/>
           </label>
           <input className="submit_button" type="submit"/>
         </div>
