@@ -212,7 +212,6 @@ app.post("/api/profile",(req,res)=>
     connection.query(sqlInsert,[{ name:Name, address1:address1, address2:address2, city:city,zip:zip, state:st}],(err,res)=>{
         console.log(err);
         console.log(res);
-        console.log(address2)
     } );
 }); 
 
