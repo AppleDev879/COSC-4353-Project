@@ -1,5 +1,4 @@
 import React from 'react'
-import Cookies from 'js-cookie';
 
 import "./Fuelquoteform.css"
 
@@ -27,7 +26,7 @@ class FuelQuoteForm extends React.Component {
             gallons: 500,
             deliveryDate: ds,
             total: 0.00,
-            userId: Cookies.get('userId'),
+            userId: localStorage.getItem("token"),
             ppg: 0.00,
             //Set by the client profile
             delivery_address: "2123 Glover Way",

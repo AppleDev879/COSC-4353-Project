@@ -131,7 +131,11 @@ const locationFactor = (userId) => {
                 if (error) {
                     return reject(error);
                 }
-                const res = JSON.parse(JSON.stringify(result[0]));
+                var res = {};
+                if (result.length == 0)
+                    res.state = 'TX';
+                else
+                    res = JSON.parse(JSON.stringify(result[0]));
                 return resolve(res.state === 'TX' ? 0.02 : 0.04);
             });
     });
