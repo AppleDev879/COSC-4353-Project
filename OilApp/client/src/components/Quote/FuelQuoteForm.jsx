@@ -262,7 +262,7 @@ class FuelQuoteForm extends React.Component {
                         <label className="labels">Delivery date
                             <input type="date"
                                 className="deliveryDate"
-                                name="delivery_date"
+                                name="deliveryDate"
                                 value={this.state.deliveryDate}
                                 onChange={(e) => this.handleInputChange(e)}
                             />
