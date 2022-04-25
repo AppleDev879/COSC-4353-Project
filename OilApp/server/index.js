@@ -208,12 +208,12 @@ app.post("/api/profile",(req,res)=>
     const zip =req.body.zip;
     const st=req.body.ST;
     const userID=req.body.userID;
-    const sqlInsert="UPDATE users (name, address1, address2, city,zip, state) VALUES(?,?,?,?,?,?)"
-    +"WHERE ID ="+ userID;
-    connection.query(sqlInsert,[ Name, address1, address2, city,zip, st],(err,res)=>{
+    const sqlInsert="UPDATE users SET?????? WHERE ID ="+ userID;
+    connection.query(sqlInsert,[{} name:Name, address1:address1, address2:address2, city:city,zip:zip, state;st}],(err,res)=>{
         console.log(err);
     } );
-});
+}); 
+
 
 
 
