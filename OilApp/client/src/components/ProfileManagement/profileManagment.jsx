@@ -6,7 +6,7 @@ import axios from "axios"
 const 	handleSubmit=(event)=>
 {
 	event.preventDefault();
-	const x = document.getElementById("State");
+	const x = document.getElementById("ST");
 
 	const newUser={
 	 First:event.target.FirstName.value,
@@ -19,7 +19,7 @@ const 	handleSubmit=(event)=>
 	}
 
 	console.log(newUser)
-	axios.post("http://localhost:3001/api/insert",
+	axios.post("http://localhost:3001/api/profile",
 	{
 		First:event.target.FirstName.value,
 		Last:event.target.LastName.value,
