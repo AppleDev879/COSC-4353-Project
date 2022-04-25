@@ -42,7 +42,7 @@ const addQuote = (quote) => {
 
 const getDeliveryAddress = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT address1 FROM user WHERE id=? LIMIT 1', [id], (error, result) => {
+        connection.query('SELECT * FROM user WHERE id=? LIMIT 1', [id], (error, result) => {
             if (error) {
                 return reject(error);
             }
@@ -50,7 +50,7 @@ const getDeliveryAddress = (id) => {
             if (result === undefined || result.length == 0) {
                 return reject('No address for that id');
             }
-            return resolve(result[0].address1);
+            return resolve(result[0].address);
         })
     })
 };
