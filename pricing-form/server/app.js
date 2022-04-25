@@ -17,7 +17,7 @@ app.use(cors());
 
 const getHistory = (userId) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM FuelQuote '
+        connection.query('SELECT * FROM fuelquote '
             + 'WHERE user_id=' + userId +
             ' ORDER BY quote_date DESC',
             function (error, results, fields) {
@@ -29,7 +29,7 @@ const getHistory = (userId) => {
 
 const addQuote = (quote) => {
     return new Promise((resolve, reject) => {
-        connection.query('INSERT INTO FuelQuote (quote_date, delivery_date, delivery_address, gallons, ppg, total, user_id)'
+        connection.query('INSERT INTO fuelquote (quote_date, delivery_date, delivery_address, gallons, ppg, total, user_id)'
             + 'VALUES (NOW(), ?, ?, ?, ?, ?, ?)', [quote.delivery_date, quote.delivery_address,
             quote.gallons, quote.ppg, quote.total, quote.userId], (error, result) => {
                 if (error) {
@@ -42,7 +42,7 @@ const addQuote = (quote) => {
 
 const getDeliveryAddress = (id) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT address1 FROM user WHERE id=? LIMIT 1', [id], (error, result) => {
+        connection.query('SELECT address1 FROM users WHERE id=? LIMIT 1', [id], (error, result) => {
             if (error) {
                 return reject(error);
             }
@@ -107,7 +107,7 @@ app.get('/api/address/:id', async (req, res) => {
 
 const locationFactor = (userId) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT state FROM user WHERE id=${userId}`,
+        connection.query(`SELECT state FROM users WHERE id=${userId}`,
             (error, result) => {
                 if (error) {
                     return reject(error);
@@ -121,7 +121,7 @@ const locationFactor = (userId) => {
 const rateHistoryFactor = (id) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT COUNT(case user_id when ${id} then 1 else null end)`
-            + 'FROM FuelQuote',
+            + 'FROM fuelquote',
             (error, result) => {
                 if (error) {
                     return reject(error);
