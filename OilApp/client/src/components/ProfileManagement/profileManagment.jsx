@@ -25,7 +25,8 @@ const 	handleSubmit=(event)=>
 		addy2:event.target.Address2.value,
 		city:event.target.City.value,
 		zip:event.target.ZipCode.value,
-		ST:x.value
+		ST:x.value,
+		userID:localStorage.getItem('token')
 	})
 	return(newUser)
 }

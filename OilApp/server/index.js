@@ -207,8 +207,9 @@ app.post("/api/profile",(req,res)=>
     const city=req.body.city;
     const zip =req.body.zip;
     const st=req.body.ST;
-    const sqlInsert="UPDATE users (name, address1, address2, city,zip, st) VALUES(?,?,?,?,?,?,?)"
-    +"WHERE ID ="+ localStorage.getItem('token');
+    const userID=req.body.userID;
+    const sqlInsert="UPDATE users (name, address1, address2, city,zip, state) VALUES(?,?,?,?,?,?,?)"
+    +"WHERE ID ="+ userID;
     db.query(sqlInsert,[ Name, address1, address2, city,zip, st],(err,res)=>{
         console.log(err);
     } );
