@@ -8,48 +8,49 @@ import Profile from "./components/Profile/profile";
 
 
 function App() {
-	const user = localStorage.getItem("token");
+  const user = localStorage.getItem("token");
 
-	const [User, setUser] = useState(null)
-    useEffect(() => {
-      const getUser = ()=>{
-        fetch("http://localhost:8080/auth/login/success",{
-          method: "GET",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": true,
-          },
+  const [User, setUser] = useState(null)
+  useEffect(() => {
+    const getUser = () => {
+      fetch("http://localhost:8080/auth/login/success", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
 
-        })
-        .then(response=>{
+      })
+        .then(response => {
           if (response.status === 200) return response.json();
           throw new Error("Authentication failed");
         })
-        .then(resObject=>{
+        .then(resObject => {
           setUser(resObject.user);
+          console.log(resObject.user);
         })
-        .catch(err=>{
+        .catch(err => {
           console.log(err);
         });
-      }
-      getUser();
-    }, []);
+    }
+    getUser();
+  }, []);
 
-	
-	return (
-		<Routes>
-			{user && <Route path="/" exact element={<Home />} />}
-			<Route path="/signup" exact element={<SignUp />} />
-			<Route path="/login" exact element={<Login />} />
+
+  return (
+    <Routes>
+      {user && <Route path="/" exact element={<Home />} />}
+      <Route path="/signup" exact element={<SignUp />} />
+      <Route path="/login" exact element={<Login />} />
       {User && <Route path="/" exact element={<Home />} />}
-      {!user && !User && <Route path="/" element={<Login />}/>}
-      {!user && !User && <Route path="/profile" element={<Login />}/>}
+      {!user && !User && <Route path="/" element={<Login />} />}
+      {!user && !User && <Route path="/profile" element={<Login />} />}
       {user && <Route path="/profile" exact element={<Profile />} />}
       {User && <Route path="/profile" exact element={<Profile />} />}
-		</Routes>
-	);
+    </Routes>
+  );
 }
 
 export default App;

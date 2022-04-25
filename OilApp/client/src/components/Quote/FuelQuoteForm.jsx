@@ -17,8 +17,6 @@ class FuelQuoteForm extends React.Component {
 
     constructor(props) {
         super(props);
-        // TODO: just for testing, delete later
-        Cookies.set('userId', 1)
 
         // Get today's date
         var date = new Date();
@@ -42,7 +40,7 @@ class FuelQuoteForm extends React.Component {
 
     updateTable(callback) {
         const fetchData = async () => {
-            const res = await fetch(`http://localhost:3001/api/history/${this.state.userId}`);
+            const res = await fetch(`http://localhost:8080/api/history/${this.state.userId}`);
             if (!res.ok) {
                 throw new Error('Data could not be fetched');
             } else {
@@ -63,7 +61,7 @@ class FuelQuoteForm extends React.Component {
 
     getUserAddress() {
         const fetchData = async () => {
-            const res = await fetch(`http://localhost:3001/api/address/${this.state.userId}`);
+            const res = await fetch(`http://localhost:8080/api/address/${this.state.userId}`);
             if (!res.ok) {
                 throw new Error('User address could not be fetched');
             } else {
@@ -116,7 +114,7 @@ class FuelQuoteForm extends React.Component {
         event.preventDefault();
         if (this.validateForm()) {
             const query = async () => {
-                const res = await fetch(`http://localhost:3001/api/getquote/${this.state.userId}/${this.state.gallons}`, {
+                const res = await fetch(`http://localhost:8080/api/getquote/${this.state.userId}/${this.state.gallons}`, {
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -157,7 +155,7 @@ class FuelQuoteForm extends React.Component {
             // Post row to backend
             const submit = async () => {
                 var formData = JSON.stringify(item);
-                const res = await fetch('http://localhost:3001/api/history', {
+                const res = await fetch('http://localhost:8080/api/history', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json, text/plain, */*',
@@ -214,11 +212,11 @@ class FuelQuoteForm extends React.Component {
 
     // From: https://stackoverflow.com/a/55556258/817946
     currencyFormat(num) {
-        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+        return '$' + Number(num).toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
     commaFormat(num) {
-        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        return Number(num).toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
 
     tableDateString(sqldate) {
@@ -281,9 +279,9 @@ class FuelQuoteForm extends React.Component {
                         </label>
                         <p hidden={!this.state.returningCustomer}>Thank you for being a repeat customer. You have received a small discount on today's order.</p>
                         <br />
-                        <div class="center">
-                        <input type="button" value="Get Quote" onClick={this.handleGetQuote} />
-                        <input type="submit" />
+                        <div className="center">
+                            <input type="button" value="Get Quote" onClick={this.handleGetQuote} />
+                            <input type="submit" />
                         </div>
                     </form>
                     <h4 className="totalPrice">Total: {this.currencyFormat(this.state.total)}</h4>
