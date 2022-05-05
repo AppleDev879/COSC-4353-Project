@@ -14,6 +14,4 @@ Error popups were included for the validation and auth process. User profile fro
 
 Unit tests have now been implemented in the front-end side with simple checks on the singular components. Mostly, just to see if the components render properly and certain user states are working correctly in the App.jsx file. However, the meat of the integration testing is done in cyrpess and their client. There, I do end-to-end tests making sure all aspects of the login and sign up process are working and that the error states are being handled properly.
 
-**Side Note: I included my .env file as env.txt in the Server folder. Just make sure to change the filename back to .env so my app can run with all the ENV variables I set for the backend.**
-
 --Carlos Molina--
