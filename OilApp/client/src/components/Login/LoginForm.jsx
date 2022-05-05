@@ -83,7 +83,7 @@ const LoginForm = () => {
             value={password} onChange={(e) => setPassword(e.target.value)} />
         </InputContainer>
         <ButtonContainer>
-          <Button type="submit" content="Log in" />
+          <Button testid="submit-button" type="submit" content="Log in" />
         </ButtonContainer>
         <BottomDiv>
           <InlineDiv><FirstTime>First time?&nbsp;</FirstTime><Link to="/signup" style={{ textDecoration: 'none' }}><MutedTrigger>Sign up</MutedTrigger></Link> </InlineDiv>

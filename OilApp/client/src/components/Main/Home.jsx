@@ -32,9 +32,4 @@ height: 100vh;
 width: 100vw;
 `;
 
-const Text = styled.h1`
-    color: #fff;
-`
-
-
 export default Main;

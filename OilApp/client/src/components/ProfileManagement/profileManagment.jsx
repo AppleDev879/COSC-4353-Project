@@ -34,7 +34,7 @@ const 	handleSubmit=(event)=>
 
 export default function Pmanagment() {
   return (
-      <div class="container">
+      <div className="container">
         <h2 className="header">
           Profile Managment
         </h2>

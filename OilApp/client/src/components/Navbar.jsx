@@ -10,7 +10,7 @@ const Navbar = ({logout}) => {
         <List>
         <ListItem><StyledLink to="/">Pricing Form</StyledLink></ListItem>
             <ListItem><StyledLink to="/profile">Profile</StyledLink></ListItem>
-            <ListItem onClick={logout}>Logout</ListItem>
+            <ListItem data-testid="logout" onClick={logout}>Logout</ListItem>
         </List>
     </NavBar>
   )
@@ -48,13 +48,6 @@ const ListItem = styled.li`
   letter-spacing: 0.03rem;
   font-weight: 500;
   cursor: pointer;
-`;
-
-const Avatar = styled.img`
-width: 2rem;
-height: 2rem;
-border-radius: 50%;
-object-fit: cover;
 `;
 
 const StyledLink = styled(Link)`
