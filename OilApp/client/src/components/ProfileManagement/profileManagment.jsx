@@ -38,7 +38,7 @@ export default function Pmanagment() {
           </label>
 
           <label className="form">
-          <input type="text" data-testid="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
+          <input type="text" name="Address1" data-testid="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
           </label>
           <label className="form">
           <input type="text" data-testid= "Address2"name="Address2" placeholder="Address 2(Optional)" className="inputs"/>
