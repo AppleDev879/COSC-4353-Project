@@ -52,7 +52,7 @@ const LoginForm = () => {
   };
 
   return (<Background>
-    {error && <Popup>{error}</Popup>}
+    {error && <Popup data-testid="popup-login">{error}</Popup>}
     <LoginContainer onSubmit={handleSubmit}>
       <Error>
         <h1>Please turn your device upright</h1>
@@ -82,8 +82,8 @@ const LoginForm = () => {
             id="current-password"
             value={password} onChange={(e) => setPassword(e.target.value)} />
         </InputContainer>
-        <ButtonContainer>
-          <Button testid="submit-button" type="submit" content="Log in" />
+        <ButtonContainer testid="submit-button">
+          <Button type="submit" content="Log in" />
         </ButtonContainer>
         <BottomDiv>
           <InlineDiv><FirstTime>First time?&nbsp;</FirstTime><Link to="/signup" style={{ textDecoration: 'none' }}><MutedTrigger>Sign up</MutedTrigger></Link> </InlineDiv>
