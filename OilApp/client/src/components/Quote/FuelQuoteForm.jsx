@@ -279,7 +279,7 @@ class FuelQuoteForm extends React.Component {
                         <p hidden={!this.state.returningCustomer}>Thank you for being a repeat customer. You have received a small discount on today's order.</p>
                         <br />
                         <div className="center">
-                            <input type="button" value="Get Quote" onClick={this.handleGetQuote} />
+                            <input type="button" className='get-quote' value="Get Quote" onClick={this.handleGetQuote} />
                             <input type="submit" />
                         </div>
                     </form>
