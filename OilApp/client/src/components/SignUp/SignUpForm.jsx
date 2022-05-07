@@ -55,13 +55,13 @@ const SignUpForm = () => {
 	};
 
 	return (<Background>
-    {error && <Popup>{error}</Popup>}
+    {error && <Popup data-testid="popup">{error}</Popup>}
 		<SignUpContainer onSubmit={handleSubmit}>
          <Error>
       <h1>Please turn your device upright</h1>
     </Error>
     <Wrapper>
-        <Link to="/login" className={styles.ExitIcon} />
+        <Link to="/login" className={styles.ExitIcon} data-testid="exit-icon" />
         <WelcomeText><h1>Create An Account</h1></WelcomeText>
         <IconsContainer>
         <Icon color={Googlebg} onClick={google}>
