@@ -8,16 +8,9 @@ const 	handleSubmit=(event)=>
 	event.preventDefault();
 	const x = document.getElementById("ST");
 
-	const newUser={
-	 Name:event.target.Name.value,
-	 addy:event.target.Address1.value,
-     addy2:event.target.Address2.value,
-     city:event.target.City.value,
-     zip:event.target.ZipCode.value,
-	 ST:x.value
-	}
 
-	console.log(newUser)
+
+
 	axios.post("http://localhost:8080/api/profile",
 	{
 		Name:event.target.Name.value,
@@ -28,7 +21,7 @@ const 	handleSubmit=(event)=>
 		ST:x.value,
 		userID:localStorage.getItem('token')
 	})
-	return(newUser)
+
 }
 	
 
@@ -41,23 +34,23 @@ export default function Pmanagment() {
         <form onSubmit={handleSubmit}>
          <div className="formList">
         <label className="form">
-        <input type="text" name="Name" placeholder="Name" maxLength={100} className="inputs" required/>
+        <input data-testid="Name" type="text" name="Name" placeholder="Name" maxLength={100} className="inputs" required/>
           </label>
 
           <label className="form">
-          <input type="text" name="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
+          <input type="text" data-testid="Address1" placeholder="Address 1" maxLength={100} className="inputs" required/>
           </label>
           <label className="form">
-          <input type="text" name="Address2" placeholder="Address 2(Optional)" className="inputs"/>
+          <input type="text" data-testid= "Address2"name="Address2" placeholder="Address 2(Optional)" className="inputs"/>
           </label>
           <label className="form" >
-          <input type="text" name="City" placeholder="City" maxLength={100} className="inputs" required/>
+          <input type="text" data-testid="City" name="City" placeholder="City" maxLength={100} className="inputs" required/>
         
           </label>
 		
           <label className="form" >
             State
-          <select id="ST" className="inputs select-category" required>, 
+          <select id="ST" data-testid="STATE" className="inputs select-category" required>, 
             	<option value="AL">AL</option>
             	<option value="AK">AK</option>
 	            <option value="AR">AR</option>	
@@ -115,9 +108,9 @@ export default function Pmanagment() {
 
 
           <label className="form">
-          <input type="text" name="ZipCode" placeholder="ZipCode" min={7} className="inputs" required/>
+          <input type="text" data-testid="ZipCode" name="ZipCode" placeholder="ZipCode" min={7} className="inputs" required/>
           </label>
-          <input className="submit_button" type="submit"/>
+          <input data-testid="submit_button" className="submit_button" type="submit"/>
         </div>
 		</form>
          
