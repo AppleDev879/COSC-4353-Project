@@ -3,8 +3,8 @@ describe('login workflow', () => {
         cy.visit('http://localhost:3000');
         cy.findByRole('textbox', { placeholder: /email/i }).type('carlos@uh.edu');
         cy.findByPlaceholderText(/password/i).type('123okGo#');
-        cy.findByRole('button', { name: /log in/i }).click();
-        cy.get('[data-test="logout"]').click();
+        cy.get('.sc-gKXOVf').click();
+        cy.get('[data-testid="logout"]').click();
     })
 })
 
@@ -18,14 +18,14 @@ describe('signup a new user', () => {
         cy.findByRole('button', { name: /sign up/i }).click();
 
         if (cy.get('.sc-papXJ')) {
-            cy.get('.styles_ExitIcon__1YoeF').click();
+            cy.get('.styles_ExitIcon__2ZxM-').click();
         }
     }),
         it('login in now with new credentials', () => {
             cy.findByRole('textbox', { placeholder: /email/i }).type('DavidSmith@gmail.com');
             cy.findByPlaceholderText(/password/i).type('DSmith123@!');
-            cy.findByRole('button', { name: /log in/i }).click();
-            cy.get('[data-test="logout"]').click();
+            cy.get('.sc-gKXOVf').click();
+            cy.get('[data-testid="logout"]').click();
         })
 })
 
