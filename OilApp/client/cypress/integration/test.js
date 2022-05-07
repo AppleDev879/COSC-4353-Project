@@ -3,7 +3,7 @@ describe('login workflow', () => {
         cy.visit('http://localhost:3000');
         cy.findByRole('textbox', { placeholder: /email/i }).type('carlos@uh.edu');
         cy.findByPlaceholderText(/password/i).type('123okGo#');
-        cy.get('.sc-gKXOVf').click();
+        cy.findByRole('button', { name: /log in/i }).click();
         cy.get('[data-testid="logout"]').click();
     })
 })
@@ -17,14 +17,14 @@ describe('signup a new user', () => {
         cy.get('#new-password').type('DSmith123@!');
         cy.findByRole('button', { name: /sign up/i }).click();
 
-        if (cy.get('.sc-papXJ')) {
-            cy.get('.styles_ExitIcon__2ZxM-').click();
+        if (cy.get('[data-testid="popup"]')) {
+            cy.get('[data-testid="exit-icon"]').click();
         }
     }),
         it('login in now with new credentials', () => {
             cy.findByRole('textbox', { placeholder: /email/i }).type('DavidSmith@gmail.com');
             cy.findByPlaceholderText(/password/i).type('DSmith123@!');
-            cy.get('.sc-gKXOVf').click();
+            cy.findByRole('button', { name: /log in/i }).click();
             cy.get('[data-testid="logout"]').click();
         })
 })
@@ -34,21 +34,21 @@ describe('login auth testing', () => {
         cy.findByRole('textbox', { placeholder: /email/i }).type('newuser@gmail.com');
         cy.findByRole('button', { name: /log in/i }).click();
 
-        const emptyPwdCheck = cy.get('.sc-dIouRR').contains(/"password" is not allowed to be empty/i);
+        const emptyPwdCheck = cy.get('[data-testid="popup-login"]').contains(/"password" is not allowed to be empty/i);
 
         if (emptyPwdCheck) {
             cy.get('#current-password').type('a');
             cy.findByRole('button', { name: /log in/i }).click();
         }
 
-        const invalidPwd = cy.get('.sc-dIouRR').contains(/invalid email or password/i);
+        const invalidPwd = cy.get('[data-testid="popup-login"]').contains(/invalid email or password/i);
 
         if (invalidPwd) {
             cy.findByRole('textbox', { placeholder: /email/i }).clear();
             cy.findByRole('button', { name: /log in/i }).click();
         }
 
-        const empytEmail = cy.get('.sc-dIouRR').contains(/"email" is not allowed to be empty/i);
+        const empytEmail = cy.get('[data-testid="popup-login"]').contains(/"email" is not allowed to be empty/i);
 
         if (empytEmail) {
             cy.log('success');
